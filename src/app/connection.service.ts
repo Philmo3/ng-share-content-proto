@@ -9,16 +9,22 @@ import { Observable } from 'rxjs';
 export class ConnectionService {
 
   private webSocketSub?: WebSocketSubject<any>
-  private webSocket$? : Observable<any>
+  webSocket$? : Observable<any>
 
   constructor() { }
 
   connect(roomName: string){
-    this.webSocketSub = webSocket(`${environment.wsUrl}?roomName=${roomName}`)
-
-    this.webSocketSub.subscribe()
-
-    this.webSocket$ = this.webSocketSub.asObservable()
+    if(!this.webSocketSub || this.webSocketSub.closed){
+      this.webSocketSub = webSocket(`${environment.wsUrl}?roomName=${roomName}`)
+      this.webSocket$ = this.webSocketSub.asObservable()
+    }
   }
 
+  disconnect(){
+    this.webSocketSub?.unsubscribe()
+  }
+
+  createElement(){
+    this.webSocketSub?.next({ type: 'create', id: null, componentName: 'none'})
+  }
 }
