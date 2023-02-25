@@ -1,6 +1,8 @@
-import { tap } from 'rxjs';
 import { ConnectionService } from './connection.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { coloredShare } from 'src/types/shareableComponent.type';
+import { ColoredComponent } from 'src/components/colored/colored.component';
+import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent{
 
-  message$ = this.connectionService.webSocket$
+  @ViewChild(DynamicTemplateDirective, {static: true}) dynamicTemplate!: DynamicTemplateDirective
+
+  messages$ = this.connectionService.messagesHandler.message$.subscribe((message) => {
+    switch(message?.type){
+      case 'Create' : {
+        this.dynamicTemplate.add(message)
+        break
+      }
+    }
+  })
 
   constructor(private connectionService: ConnectionService){}
 
   connect(){
     this.connectionService.connect('test')
-    this.message$ = this.connectionService.webSocket$?.pipe(tap(msg => console.log(msg)))
   }
 
   disconnect(){
@@ -23,6 +33,6 @@ export class AppComponent{
   }
 
   createElement(){
-    this.connectionService.createElement()
+    this.connectionService.createElement({componentName: 'Colored'} as coloredShare)
   }
 }

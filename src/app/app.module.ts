@@ -1,3 +1,4 @@
+import { ColoredComponent } from './../components/colored/colored.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -5,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,6 +16,8 @@ import {MatButtonModule} from '@angular/material/button';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    ColoredComponent,
+    DynamicTemplateDirective,
   ],
   providers: [],
   bootstrap: [AppComponent]
