@@ -17,7 +17,7 @@ import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directi
     BrowserAnimationsModule,
     MatButtonModule,
     ColoredComponent,
-    DynamicTemplateDirective,
+    DynamicTemplateDirective
   ],
   providers: [],
   bootstrap: [AppComponent]

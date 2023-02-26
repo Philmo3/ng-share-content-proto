@@ -1,9 +1,9 @@
-import { Component, Type } from '@angular/core';
-
 import { BehaviorSubject } from 'rxjs'
-import { ShareableComponent, ShareableComponentName, ShareableTypeDefinition } from './shareableComponent.type'
+import { ShareableComponent, ShareableComponentName, ShareableTypeDefinition } from './shareable.type'
 
 export class MessagesHandler{
+
+  private idIndex = 1
 
   private _message?: Message<ShareableTypeDefinition>
 
@@ -12,13 +12,21 @@ export class MessagesHandler{
 
   constructor(){}
 
-  add(message: socketMessage){
-    this._message=new Message(1, message.type, {componentName: message.componentName})
+  create(message: socketMessage){
+    this._message=new Message(this.idIndex, message.type, {componentName: message.componentName})
     this._messageSubject.next(this._message)
+    this.idIndex++
   }
 
-  update(message: Message<ShareableTypeDefinition>){
+  add(message: socketMessage){
+    this._message=new Message(message.id!, message.type, {componentName: message.componentName})
+    this._messageSubject.next(this._message)
+    this.idIndex = message.id!++
+  }
 
+  update(message: socketMessage){
+    this._message = new Message(message.id!, message.type, {componentName: message.componentName}, message.inputs)
+    this._messageSubject.next(this._message)
   }
 
   delete(messageId: number){
@@ -29,7 +37,7 @@ export class MessagesHandler{
 export class Message<ShareableType>{
   id: number
   componentName: ShareableComponentName
-  inputs?: Map<string, string> = new Map()
+  inputs?: any
   type: MessageType
 
   constructor(id: number, type: MessageType, component: ShareableType, inputs?: Map<string, string>){
@@ -41,4 +49,4 @@ export class Message<ShareableType>{
 }
 
 export type MessageType = 'Create' | 'Update' | 'Delete'
-export type socketMessage = Omit<Message<any>, "id">
+export type socketMessage = Omit<Message<any>, "id" | "componentName"> & { id?: number, componentName?: string, clientId: number }

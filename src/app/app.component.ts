@@ -1,6 +1,6 @@
 import { ConnectionService } from './connection.service';
 import { Component, ViewChild } from '@angular/core';
-import { coloredShare } from 'src/types/shareableComponent.type';
+import { coloredShare } from 'src/types/shareable.type';
 import { ColoredComponent } from 'src/components/colored/colored.component';
 import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
 
@@ -17,6 +17,10 @@ export class AppComponent{
     switch(message?.type){
       case 'Create' : {
         this.dynamicTemplate.add(message)
+        break
+      }
+      case 'Update': {
+        this.dynamicTemplate.update(message)
         break
       }
     }
