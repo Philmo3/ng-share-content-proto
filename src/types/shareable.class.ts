@@ -1,5 +1,4 @@
 import { ConnectionService } from './../app/connection.service';
-import { Input } from "@angular/core";
 
 
 export abstract class Shareable{
