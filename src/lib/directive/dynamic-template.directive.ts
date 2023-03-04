@@ -1,8 +1,8 @@
-import { ConnectionService } from './../app/connection.service';
-import { NameToComponentMap } from './../constant/name-to-component.map';
+import { ConnectionService } from '../../app/connection.service';
+import { NameToComponentMap } from '../constant/name-to-component.map';
 import { ComponentRef, Directive, Type, ViewContainerRef } from '@angular/core';
-import { Message } from 'src/types/messages.class';
-import { Shareable } from 'src/types/shareable.class';
+import { Message } from 'src/lib/types/messages.class';
+import { Shareable } from 'src/lib/types/shareable.class';
 
 @Directive({
   selector: '[dynamicTemplate]',
@@ -36,7 +36,6 @@ export class DynamicTemplateDirective {
     if(component){
       const componentRef = this.viewContainerRef.createComponent(component)
       componentRef.instance.shareId = message.id
-      componentRef.setInput('bondary', '.plane-container')
       this.setInputs(componentRef, message.inputs)
       this.componentsReference.set(message.id, componentRef)
     }

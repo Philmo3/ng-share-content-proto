@@ -1,4 +1,4 @@
-import { ColoredComponent } from './../components/colored/colored.component';
+import { ColoredComponent } from './component/colored/colored.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -6,7 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
-import { ShareablePlaneComponent } from 'src/components/shareable-plane/shareable-plane.component';
+import { ShareablePlaneComponent } from 'src/lib/components/shareable-plane/shareable-plane.component';
+import { ShareableModule } from 'src/lib/shareable.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +18,7 @@ import { ShareablePlaneComponent } from 'src/components/shareable-plane/shareabl
     BrowserAnimationsModule,
     MatButtonModule,
     ColoredComponent,
-    ShareablePlaneComponent,
+    ShareableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

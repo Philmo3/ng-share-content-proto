@@ -1,8 +1,8 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
-import { ConnectionService } from './../../app/connection.service';
+import { ConnectionService } from '../../connection.service';
 import { Component, HostListener, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Shareable } from 'src/types/shareable.class';
+import { Shareable } from 'src/lib/types/shareable.class';
 
 @Component({
   selector: 'app-colored',
@@ -10,7 +10,6 @@ import { Shareable } from 'src/types/shareable.class';
   imports: [CommonModule, DragDropModule],
   templateUrl: './colored.component.html',
   styleUrls: ['./colored.component.css'],
-  hostDirectives: [{ directive: CdkDrag, inputs: ['cdkDragBoundary: bondary']}]
 })
 export class ColoredComponent extends Shareable{
 
