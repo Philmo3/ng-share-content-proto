@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
-import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
+import { ShareablePlaneComponent } from 'src/components/shareable-plane/shareable-plane.component';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +17,7 @@ import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directi
     BrowserAnimationsModule,
     MatButtonModule,
     ColoredComponent,
-    DynamicTemplateDirective
+    ShareablePlaneComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

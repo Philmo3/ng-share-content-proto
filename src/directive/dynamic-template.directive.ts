@@ -1,3 +1,4 @@
+import { ConnectionService } from './../app/connection.service';
 import { NameToComponentMap } from './../constant/name-to-component.map';
 import { ComponentRef, Directive, Type, ViewContainerRef } from '@angular/core';
 import { Message } from 'src/types/messages.class';
@@ -11,13 +12,31 @@ export class DynamicTemplateDirective {
 
   private componentsReference: Map<string, ComponentRef<Shareable>> = new Map()
 
-  constructor(private viewContainerRef: ViewContainerRef) { }
+  messages$ = this.connectionService.messagesHandler.message$.subscribe((message) => {
+    console.log(message)
+    switch(message?.type){
+      case 'Create' : {
+        this.add(message)
+        break
+      }
+      case 'Update': {
+        this.update(message)
+        break
+      }
+    }
+  })
+
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private connectionService: ConnectionService,
+    ) { }
 
   add(message: Message<any>){
     const component = NameToComponentMap.get(message.componentName)
     if(component){
       const componentRef = this.viewContainerRef.createComponent(component)
       componentRef.instance.shareId = message.id
+      componentRef.setInput('bondary', '.plane-container')
       this.setInputs(componentRef, message.inputs)
       this.componentsReference.set(message.id, componentRef)
     }

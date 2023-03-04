@@ -1,6 +1,5 @@
 import { ConnectionService } from './connection.service';
-import { Component, ViewChild } from '@angular/core';
-import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +7,6 @@ import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directi
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-
-  @ViewChild(DynamicTemplateDirective, {static: true}) dynamicTemplate!: DynamicTemplateDirective
-
-  messages$ = this.connectionService.messagesHandler.message$.subscribe((message) => {
-    switch(message?.type){
-      case 'Create' : {
-        this.dynamicTemplate.add(message)
-        break
-      }
-      case 'Update': {
-        this.dynamicTemplate.update(message)
-        break
-      }
-    }
-  })
 
   constructor(private connectionService: ConnectionService){}
 

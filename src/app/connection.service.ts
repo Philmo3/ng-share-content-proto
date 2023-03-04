@@ -40,6 +40,7 @@ export class ConnectionService {
   }
 
   private onNewMessage(messagePayload: socketMessage){
+    console.log(messagePayload)
     if(messagePayload.inputs){
       messagePayload.inputs = new Map(Object.entries(messagePayload.inputs))
     }
