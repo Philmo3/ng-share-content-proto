@@ -1,27 +1,18 @@
 import { BehaviorSubject } from 'rxjs'
-import { ShareableComponent, ShareableComponentName, ShareableTypeDefinition } from './shareable.type'
+import { ShareableComponent, ShareableComponentName } from './shareable.type'
 
 export class MessagesHandler{
 
-  private idIndex = 1
+  private _message?: Message<ShareableComponent>
 
-  private _message?: Message<ShareableTypeDefinition>
-
-  private _messageSubject = new BehaviorSubject<Message<ShareableTypeDefinition> | null>(null)
+  private _messageSubject = new BehaviorSubject<Message<ShareableComponent> | null>(null)
   message$ = this._messageSubject.asObservable()
 
   constructor(){}
 
-  create(message: socketMessage){
-    this._message=new Message(this.idIndex, message.type, {componentName: message.componentName})
-    this._messageSubject.next(this._message)
-    this.idIndex++
-  }
-
   add(message: socketMessage){
-    this._message=new Message(message.id!, message.type, {componentName: message.componentName})
+    this._message=new Message(message.id!, message.type, {componentName: message.componentName}, message.inputs)
     this._messageSubject.next(this._message)
-    this.idIndex = message.id!++
   }
 
   update(message: socketMessage){
@@ -35,18 +26,18 @@ export class MessagesHandler{
 }
 
 export class Message<ShareableType>{
-  id: number
+  id: string
   componentName: ShareableComponentName
   inputs?: any
   type: MessageType
 
-  constructor(id: number, type: MessageType, component: ShareableType, inputs?: Map<string, string>){
+  constructor(id: string, type: MessageType, component: ShareableType, inputs?: Map<string, string>){
     this.id = id
     this.type = type
-    this.componentName = (component as ShareableComponent<any>).componentName
+    this.componentName = (component as ShareableComponent).componentName
     this.inputs = inputs
   }
 }
 
 export type MessageType = 'Create' | 'Update' | 'Delete'
-export type socketMessage = Omit<Message<any>, "id" | "componentName"> & { id?: number, componentName?: string, clientId: number }
+export type socketMessage = Omit<Message<any>, "id" | "componentName"> & {id?: string, componentName?: string, clientId: number }

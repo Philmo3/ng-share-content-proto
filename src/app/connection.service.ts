@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 import { Subscription } from 'rxjs';
 import { MessagesHandler, socketMessage } from 'src/types/messages.class';
-import { ShareableTypeDefinition } from 'src/types/shareable.type';
+import { ShareableComponent } from 'src/types/shareable.type';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,33 +31,29 @@ export class ConnectionService {
     this.webSocketSubscription?.unsubscribe()
   }
 
-  createElement(shareable: ShareableTypeDefinition){
+  createElement(shareable: ShareableComponent){
     this.webSocketSub?.next({type: 'Create', componentName: shareable.componentName, clientId: this.clientId})
   }
 
-  update(id: number, inputs: Map<string, string>){
-    console.log(inputs)
+  update(id: string, inputs: Map<string, string>){
     this.webSocketSub?.next({type: 'Update', id, inputs: Object.fromEntries(inputs), clientId: this.clientId})
   }
 
   private onNewMessage(messagePayload: socketMessage){
-   switch(messagePayload.type){
-    case 'Create' : {
-      if(messagePayload.clientId === this.clientId){
-        this.messagesHandler.create(messagePayload)
-      } else {
-        this.messagesHandler.add(messagePayload)
-      }
-      break
-    }
-
-    case 'Update' : {
+    if(messagePayload.inputs){
       messagePayload.inputs = new Map(Object.entries(messagePayload.inputs))
-      this.messagesHandler.update(messagePayload)
-      break
     }
-   }
-    
+    switch(messagePayload.type){
+      case 'Create' : {
+        this.messagesHandler.add(messagePayload)
+        break;
+      }
+
+      case 'Update' : {
+        this.messagesHandler.update(messagePayload)
+        break;
+      }
+    }
   }
 }
 

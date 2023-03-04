@@ -2,7 +2,7 @@ import { ConnectionService } from './../app/connection.service';
 
 
 export abstract class Shareable{
-  shareId?: number
+  shareId?: string
 
   constructor(protected connectionService: ConnectionService){}
 

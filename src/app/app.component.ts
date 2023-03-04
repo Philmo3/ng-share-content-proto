@@ -1,7 +1,5 @@
 import { ConnectionService } from './connection.service';
 import { Component, ViewChild } from '@angular/core';
-import { coloredShare } from 'src/types/shareable.type';
-import { ColoredComponent } from 'src/components/colored/colored.component';
 import { DynamicTemplateDirective } from 'src/directive/dynamic-template.directive';
 
 @Component({
@@ -37,6 +35,6 @@ export class AppComponent{
   }
 
   createElement(){
-    this.connectionService.createElement({componentName: 'Colored'} as coloredShare)
+    this.connectionService.createElement({componentName: 'Colored'})
   }
 }
