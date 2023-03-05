@@ -54,7 +54,6 @@ export class DynamicTemplateDirective {
   }
 
   updatePostion(message: Message<any>){
-    console.log(message.position)
     const componentRef = this.componentsReference.get(message.id)
     if(componentRef){
       componentRef.instance.updatePosition(message.position!)

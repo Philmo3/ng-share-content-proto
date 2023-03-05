@@ -31,8 +31,6 @@ export class MoveableComponent {
   }
 
   onDropped(event: CdkDragEnd){
-    console.log(event)
-    console.log()
     this.connectionService.updatePosition(this.referenceShareableId!, this.cdkDrag.getFreeDragPosition())
   }
 
