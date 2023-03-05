@@ -44,6 +44,7 @@ export class ConnectionService {
   }
 
   private onNewMessage(messagePayload: socketMessage){
+
     switch(messagePayload.type){
       case 'Create' : {
         this.messagesHandler.add(messagePayload)

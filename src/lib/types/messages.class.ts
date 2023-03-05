@@ -12,7 +12,7 @@ export class MessagesHandler{
   constructor(){}
 
   add(message: socketMessage){
-    this._message=new Message(message.id!, message.type, {componentName: message.componentName}, message.inputs, message.position)
+    this._message = new Message(message.id!, message.type, {componentName: message.componentName}, message.inputs, message.position)
     this._messageSubject.next(this._message)
   }
 

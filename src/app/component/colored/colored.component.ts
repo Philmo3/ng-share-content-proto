@@ -15,7 +15,7 @@ export class ColoredComponent extends Shareable{
 
   @HostListener('click')
   onClick(){
-    //this.update('color', 'green')
+    this.update('color', 'green')
   }
 
   @Input() color: string = 'red'
