@@ -5,6 +5,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 import { Subscription } from 'rxjs';
 import { MessagesHandler, socketMessage } from 'src/lib/types/messages.class';
 import { ShareableComponent } from 'src/lib/types/shareable.type';
+import { Point } from '@angular/cdk/drag-drop';
+import { v4 as uuidv4 } from 'uuid'
 @Injectable()
 export class ConnectionService {
 
@@ -12,7 +14,7 @@ export class ConnectionService {
   private webSocketSubscription? : Subscription
   messagesHandler: MessagesHandler = new MessagesHandler()
 
-  clientId = 1
+  clientId = uuidv4()
 
   constructor() {}
 
@@ -37,11 +39,11 @@ export class ConnectionService {
     this.webSocketSub?.next({type: 'Update', id, inputs: Object.fromEntries(inputs), clientId: this.clientId})
   }
 
+  updatePosition(id: string, point: Point){
+    this.webSocketSub?.next({type: 'Position', position: point, id, clientId: this.clientId})
+  }
+
   private onNewMessage(messagePayload: socketMessage){
-    console.log(messagePayload)
-    if(messagePayload.inputs){
-      messagePayload.inputs = new Map(Object.entries(messagePayload.inputs))
-    }
     switch(messagePayload.type){
       case 'Create' : {
         this.messagesHandler.add(messagePayload)
@@ -50,6 +52,13 @@ export class ConnectionService {
 
       case 'Update' : {
         this.messagesHandler.update(messagePayload)
+        break;
+      }
+
+      case 'Position': {
+        if(messagePayload.clientId !== this.clientId){
+          this.messagesHandler.update(messagePayload)
+        }
         break;
       }
     }
