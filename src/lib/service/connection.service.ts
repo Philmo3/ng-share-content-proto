@@ -52,7 +52,9 @@ export class ConnectionService {
       }
 
       case 'Update' : {
+        
         this.messagesHandler.update(messagePayload)
+        
         break;
       }
 

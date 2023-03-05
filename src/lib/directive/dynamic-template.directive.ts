@@ -1,9 +1,10 @@
 import { MoveableComponent } from './../components/moveable/moveable.component';
 import { ConnectionService } from '../service/connection.service';
-import { NameToComponentMap } from '../constant/name-to-component.map';
-import { ComponentRef, Directive, Type, ViewContainerRef } from '@angular/core';
+import { NameToComponentMap } from '../../app/constant/name-to-component.map';
+import { ComponentRef, Directive, Inject, Type, ViewContainerRef } from '@angular/core';
 import { Message } from 'src/lib/types/messages.class';
 import { Shareable } from 'src/lib/types/shareable.class';
+import { SHAREABLE_MAP_TOKEN } from '../injectable/shareable-map-token';
 
 @Directive({
   selector: '[dynamicTemplate]',
@@ -32,11 +33,12 @@ export class DynamicTemplateDirective {
 
   constructor(
     private viewContainerRef: ViewContainerRef,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    @Inject(SHAREABLE_MAP_TOKEN) private mappedComponentRefs: Map<string, Type<Shareable>>,
     ) { }
 
   add(message: Message<any>){
-    const component = NameToComponentMap.get(message.componentName)
+    const component = this.mappedComponentRefs.get(message.componentName)
     if(component){
       const componentRef = this.createMovable(message, component)
       this.componentsReference.set(message.id, componentRef)

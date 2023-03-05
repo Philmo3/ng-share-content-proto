@@ -21,4 +21,8 @@ export class AppComponent{
   createElement(){
     this.connectionService.createElement({componentName: 'Colored'})
   }
+
+  createEditable(){
+    this.connectionService.createElement({componentName: 'SimpleEditable'})
+  }
 }

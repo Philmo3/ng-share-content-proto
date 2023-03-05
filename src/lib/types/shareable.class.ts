@@ -7,7 +7,7 @@ export abstract class Shareable{
 
   constructor(protected connectionService: ConnectionService){}
 
-  update(inputName: string, value: any){
+  update(inputName: string, value: any,){
     if(this.shareId){
       this.connectionService.update(this.shareId, new Map().set(inputName, ( typeof value) === 'string' ? value : JSON.stringify(value)))
     }
