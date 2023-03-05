@@ -1,4 +1,4 @@
-import { ConnectionService } from '../../app/connection.service';
+import { ConnectionService } from '../service/connection.service';
 import { NameToComponentMap } from '../constant/name-to-component.map';
 import { ComponentRef, Directive, Type, ViewContainerRef } from '@angular/core';
 import { Message } from 'src/lib/types/messages.class';

@@ -1,5 +1,5 @@
 
-import { ConnectionService } from '../../app/connection.service';
+import { ConnectionService } from '../service/connection.service';
 
 
 export abstract class Shareable{

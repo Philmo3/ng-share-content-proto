@@ -1,5 +1,5 @@
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
-import { ConnectionService } from '../../connection.service';
+import { ConnectionService } from '../../../lib/service/connection.service';
 import { Component, HostListener, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Shareable } from 'src/lib/types/shareable.class';

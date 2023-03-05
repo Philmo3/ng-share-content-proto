@@ -1,13 +1,11 @@
-import { environment } from './../environments/environment';
+import { environment } from '../../environments/environment';
 
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket'
 import { Subscription } from 'rxjs';
 import { MessagesHandler, socketMessage } from 'src/lib/types/messages.class';
 import { ShareableComponent } from 'src/lib/types/shareable.type';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ConnectionService {
 
   private webSocketSub?: WebSocketSubject<socketMessage>

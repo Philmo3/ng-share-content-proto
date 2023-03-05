@@ -1,4 +1,4 @@
-import { ConnectionService } from './connection.service';
+import { ConnectionService } from '../lib/service/connection.service';
 import { Component } from '@angular/core';
 
 @Component({
